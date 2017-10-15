@@ -11,7 +11,7 @@
     <li>{{ post-data.month }}
         {{ post-data.date.day }},
         {{ post-data.date.year }} -
-        <a href="/blog{{ post-data.url }}">{{ post-data.title }}</a>
+        <a href="/blog{{ post-data.url }}">{{ post-data.title|safe }}</a>
     </li>
     {% endfor %}
   </ul>

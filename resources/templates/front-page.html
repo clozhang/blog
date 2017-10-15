@@ -7,7 +7,7 @@
         <div class="row">
           <div class="col-sm-8 blog-main">
 
-            <h1>{{ page-data.site-title }}</h1>
+            <h1>{{ page-data.site-title|safe }}</h1>
             <p class="lead">{{ page-data.site-description }}</p>
 
             <div class="row">
@@ -16,10 +16,10 @@
                 <div class="headliner well">
 
                   <h2>
-                    <a href="/blog{{ headliner.url }}">{{ headliner.title }}</a>
+                    <a href="/blog{{ headliner.url }}">{{ headliner.title|safe }}</a>
                   </h2>
-                  {% if headliner.subtitle %}
-                    <h4>{{ headliner.subtitle }}</h4>
+                  {% if headliner.subtitle|safe %}
+                    <h4>{{ headliner.subtitle|safe }}</h4>
                   {% endif %}
                   {% if headliner.excerpt %}
                     <h3>{{ headliner.excerpt|safe }}</h3>
@@ -47,10 +47,10 @@
               <div class="col-sm-6 well subheadliner">
 
                   <h2>
-                    <a href="/blog{{ column.url }}">{{ column.title }}</a>
+                    <a href="/blog{{ column.url }}">{{ column.title|safe }}</a>
                   </h2>
-                  {% if column.subtitle %}
-                    <h4>{{ column.subtitle }}</h4>
+                  {% if column.subtitle|safe %}
+                    <h4>{{ column.subtitle|safe }}</h4>
                   {% endif %}
                   {% if column.excerpt %}
                     <h3>{{ column.excerpt|safe }}</h3>
