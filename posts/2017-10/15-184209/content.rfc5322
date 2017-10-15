@@ -10,8 +10,8 @@ Content-Type: md
 After all the thinking last night, I woke up ready to tackle the new work
 on &pi;-Calculus in Clojure :-) First off, there's a new logo!
 
-<a href="https://github.com/clozhang/resources/images/logo-6-2100x.png">
-<img src="https://github.com/clozhang/resources/images/logo-6-250x.png">
+<a href="https://raw.githubusercontent.com/clozhang/resources/master/images/logo-6-2100x.png">
+<img src="https://raw.githubusercontent.com/clozhang/resources/master/images/logo-6-250x.png">
 </a>
 
 Most obviously, there's the new blog you're reading :-)
