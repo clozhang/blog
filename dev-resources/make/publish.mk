@@ -4,7 +4,7 @@ REPO = $(shell git config --get remote.origin.url)
 LOCAL_DOCS_HOST = localhost
 LOCAL_DOCS_PORT = $(lastword $(shell grep dev-port project.clj))
 LESS_DIR = src/less
-COLOUR_THEME = clojang
+COLOUR_THEME = clozhang
 
 blog: blog-clean blog-local
 

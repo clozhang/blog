@@ -1,5 +1,5 @@
-(ns clojang.blog.web.content.page
-  (:require [clojang.blog.web.content.data :as data]
+(ns clozhang.blog.web.content.page
+  (:require [clozhang.blog.web.content.data :as data]
             [dragon.blog :as blog]
             [dragon.web.content :as content]))
 

@@ -1,4 +1,4 @@
-# Clojang Blog
+# Clozhang Blog
 
 *The Official Blog for Clojure/BEAM Language Development*
 

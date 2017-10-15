@@ -1,4 +1,4 @@
-(ns clojang.blog.web.content.data
+(ns clozhang.blog.web.content.data
   (:require [dragon.blog :as blog]
             [dragon.config :as config]))
 

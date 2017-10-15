@@ -1,13 +1,13 @@
-(ns clojang.blog.dev
-  "Clojang blog development namespace
+(ns clozhang.blog.dev
+  "Clozhang blog development namespace
 
   This namespace is particularly useful when doing active development on the
-  Clojang blog application."
-  (:require [clojang.blog.cli :as cli]
-            [clojang.blog.main :as main]
-            [clojang.blog.routes :as routes]
-            [clojang.blog.web.content.data :as page-data]
-            [clojang.blog.web.content.page :as page]
+  Clozhang blog application."
+  (:require [clozhang.blog.cli :as cli]
+            [clozhang.blog.main :as main]
+            [clozhang.blog.routes :as routes]
+            [clozhang.blog.web.content.data :as page-data]
+            [clozhang.blog.web.content.page :as page]
             [clojure.edn :as edn]
             [clojure.java.io :as io]
             [clojure.pprint :refer [pprint print-table]]
@@ -30,7 +30,7 @@
             [trifl.fs :as fs]
             [trifl.java :as java]))
 
-(logger/set-level! '[clojang dragon] :trace)
+(logger/set-level! '[clozhang dragon] :trace)
 
 (defonce server (atom nil))
 

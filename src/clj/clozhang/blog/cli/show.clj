@@ -1,4 +1,4 @@
-(ns clojang.blog.cli.show
+(ns clozhang.blog.cli.show
   (:require [clojure.pprint :refer [pprint]]
             [clojusc.twig :as logger]
             [dragon.config :as config]
@@ -10,7 +10,7 @@
 
 (defn help-cmd
   [& args]
-  (docs/print-docstring 'clojang.blog.cli.show 'run))
+  (docs/print-docstring 'clozhang.blog.cli.show 'run))
 
 (defn run
   "

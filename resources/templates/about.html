@@ -4,8 +4,8 @@
 
 {% block content_body %}
 <p>
-  "Clojang" is a set of libraries and tools (including the library
-  <code>clojang</code>-proper) that are dedicated to Clojure-BEAM
+  "Clozhang" is a set of libraries and tools (including the library
+  <code>clozhang</code>-proper) that are dedicated to Clojure-BEAM
   interop, where BEAM languages include all those of the Erlang
   ecosystem: Erlang, LFE, Elixir, Joxa, Reia, Luerl, Erlog, etc.
 </p>
@@ -13,7 +13,7 @@
 <div class="row">
   <div class="col-md-10 col-md-offset-2">
     <blockquote class="blockquote-reverse">
-      Clojang supports production deployments of distributed,
+      Clozhang supports production deployments of distributed,
       fault-tolerant, soft real-time BEAM/JVM applications with
       appropriate restart and fail-over strategies and hot
       code-loading.
@@ -22,14 +22,14 @@
 </div>
 
 <p>
-  In particular, the aim of Clojang is to support production
+  In particular, the aim of Clozhang is to support production
   deployments of distributed, fault-tolerant, soft real-time
   BEAM/JVM applications, capable of running JVM code in supervision
   trees with appropriate restart and fail-over strategies, hot
   code-loading (live system updates with no downtime), and the like.
 </p>
 <p>
-  From the developer perspective, Clojang wants to make OTP-based
+  From the developer perspective, Clozhang wants to make OTP-based
   communications between BEAM languages and the JVM as Clojure-idiomatic
   as possible and as natural to BEAM programmers as can reasonably
   be provided.
@@ -37,15 +37,15 @@
 <p>
   For an overview of the three primary ways in which one may develop
   JVM-BEAM interoperable applications, be sure to read the
-  <a href="http://clojang.github.io/jiface/current/05-apis.html">API
+  <a href="http://clozhang.github.io/jiface/current/05-apis.html">API
   comparison docs</a>. To see how LFE and Clojure applications can
   interoperate, you'll want to read the
-  <a href="http://clojang.github.io/clojang/current/30-talking-to-servers.html">"Talking
+  <a href="http://clozhang.github.io/clozhang/current/30-talking-to-servers.html">"Talking
   to Servers" tutorial</a>.
 </p>
 <h3>Sample Code</h3>
 
-<p>Here's a Clojure OTP server written using Clojang:</p>
+<p>Here's a Clojure OTP server written using Clozhang:</p>
 
 <div class="row">
   <div class="col-md-10 col-md-offset-1">
@@ -74,20 +74,20 @@
 <div class="row">
   <div class="col-md-10 col-md-offset-1">
 
-    <pre><code class="lisp">&#40;clojang-lfe@host&#41;&gt; &#40;! #&#40;default clojang@host&#41; `#&#40;ping ,&#40;self&#41;&#41;&#41;
+    <pre><code class="lisp">&#40;clozhang-lfe@host&#41;&gt; &#40;! #&#40;default clozhang@host&#41; `#&#40;ping ,&#40;self&#41;&#41;&#41;
     #&#40;ping &lt;0.34.0&gt;&#41;
-    &#40;clojang-lfe@host&#41;&gt; &#40;! #&#40;default clojang@host&#41; `#&#40;ping ,&#40;self&#41;&#41;&#41;
+    &#40;clozhang-lfe@host&#41;&gt; &#40;! #&#40;default clozhang@host&#41; `#&#40;ping ,&#40;self&#41;&#41;&#41;
     #&#40;ping &lt;0.34.0&gt;&#41;
-    &#40;clojang-lfe@host&#41;&gt; &#40;! #&#40;default clojang@host&#41; `#&#40;ping ,&#40;self&#41;&#41;&#41;
+    &#40;clozhang-lfe@host&#41;&gt; &#40;! #&#40;default clozhang@host&#41; `#&#40;ping ,&#40;self&#41;&#41;&#41;
     #&#40;ping &lt;0.34.0&gt;&#41;
-    &#40;clojang-lfe@host&#41;&gt; &#40;c:flush&#41;
+    &#40;clozhang-lfe@host&#41;&gt; &#40;c:flush&#41;
     Shell got pong
     Shell got pong
     Shell got pong
     ok
-    &#40;clojang-lfe@host&#41;&gt; &#40;! #&#40;default clojang@host&#41; `#&#40;get-ping-count ,&#40;self&#41;&#41;&#41;
+    &#40;clozhang-lfe@host&#41;&gt; &#40;! #&#40;default clozhang@host&#41; `#&#40;get-ping-count ,&#40;self&#41;&#41;&#41;
     #&#40;get-count &lt;0.34.0&gt;&#41;
-    &#40;clojang-lfe@host&#41;&gt; &#40;c:flush&#41;
+    &#40;clozhang-lfe@host&#41;&gt; &#40;c:flush&#41;
     Shell got 3
     ok
     </code></pre>
@@ -119,21 +119,21 @@
 <div class="row">
   <div class="col-md-10 col-md-offset-1">
 
-    <pre><code class="clj">clojang.dev=&gt; &#40;rpc/! :clojang-lfe :ping-pong :ping&#41;
+    <pre><code class="clj">clozhang.dev=&gt; &#40;rpc/! :clozhang-lfe :ping-pong :ping&#41;
     :ok
-    clojang.dev=&gt; &#40;rpc/! :clojang-lfe :ping-pong :ping&#41;
+    clozhang.dev=&gt; &#40;rpc/! :clozhang-lfe :ping-pong :ping&#41;
     :ok
-    clojang.dev=&gt; &#40;rpc/! :clojang-lfe :ping-pong :ping&#41;
+    clozhang.dev=&gt; &#40;rpc/! :clozhang-lfe :ping-pong :ping&#41;
     :ok
-    clojang.dev=&gt; &#40;rpc/receive :clojang-lfe&#41;
+    clozhang.dev=&gt; &#40;rpc/receive :clozhang-lfe&#41;
     :pong
-    clojang.dev=&gt; &#40;rpc/receive :clojang-lfe&#41;
+    clozhang.dev=&gt; &#40;rpc/receive :clozhang-lfe&#41;
     :pong
-    clojang.dev=&gt; &#40;rpc/receive :clojang-lfe&#41;
+    clozhang.dev=&gt; &#40;rpc/receive :clozhang-lfe&#41;
     :pong
-    clojang.dev=&gt; &#40;rpc/! :clojang-lfe :ping-pong :get-ping-count&#41;
+    clozhang.dev=&gt; &#40;rpc/! :clozhang-lfe :ping-pong :get-ping-count&#41;
     :ok
-    clojang.dev=&gt; &#40;rpc/receive :clojang-lfe&#41;
+    clozhang.dev=&gt; &#40;rpc/receive :clozhang-lfe&#41;
     3
     </code></pre>
 

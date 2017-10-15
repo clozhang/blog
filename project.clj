@@ -1,9 +1,9 @@
-(defproject clojang/blog "0.1.0-SNAPSHOT"
-  :description "The Clojang Blog"
-  :url "https://clojang.lfe.io/"
+(defproject clozhang/blog "0.1.0-SNAPSHOT"
+  :description "The Clozhang Blog"
+  :url "https://clozhang.github.io/blog"
   :scm {
     :name "git"
-    :url "https://github.com/clojang/blog"}
+    :url "https://github.com/clozhang/blog"}
   :license {
     :name "Apache License, Version 2.0"
     :url "http://www.apache.org/licenses/LICENSE-2.0"}
@@ -23,26 +23,26 @@
     [tentacles "0.5.1"]]
   :source-paths ["src/clj"]
   :dragon {
-    :domain "clojang.lfe.io"
-    :name "The Clojang Blog"
-    :description "News, Information, & Tutorials for the Clojang Library Collection"
+    :domain "clozhang.github.io/blog"
+    :name "The Clozhang Blog"
+    :description "News, Information, & Tutorials for Clojure π-Calculus and the Clozhang Library Collection"
     :dev-port 5097
     :output-dir "docs"
     :posts-path "/archives"
     :feed-count 20
     :cli {
       :log-level :info
-      :log-ns [clojang.blog dragon]}}
+      :log-ns [clozhang.blog dragon]}}
   :profiles {
     :uberjar {:aot :all}
     :dev {
       :source-paths ["dev-resources/src"]
-      :main clojang.blog.main
-      :aliases {"blog" ^{:doc (str "The Clojang blog CLI; "
+      :main clozhang.blog.main
+      :aliases {"blog" ^{:doc (str "The Clozhang blog CLI; "
                                    "type `lein blog help` for commands\n")}
-                       ["run" "-m" "clojang.blog.main" "cli"]}
+                       ["run" "-m" "clozhang.blog.main" "cli"]}
       :repl-options {
-        :init-ns clojang.blog.dev}
+        :init-ns clozhang.blog.dev}
       :plugins [
         [lein-simpleton "1.3.0"]]
       :dependencies [

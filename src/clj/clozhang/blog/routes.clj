@@ -1,4 +1,4 @@
-(ns clojang.blog.routes
+(ns clozhang.blog.routes
   "The routes for the blog need to take into consideration the following:
 
    * Actual posts will be generated behind the scenes when processing on-disk
@@ -8,8 +8,8 @@
    * Since the posts have already been generated and saved to disc, their
      routes should be generated dynamically as URI path / slurp call pairs.
   "
-  (:require [clojang.blog.reader :as reader]
-            [clojang.blog.web.content.page :as page]
+  (:require [clozhang.blog.reader :as reader]
+            [clozhang.blog.web.content.page :as page]
             [clojusc.twig :refer [pprint]]
             [dragon.blog :as blog]
             [dragon.config :as config]

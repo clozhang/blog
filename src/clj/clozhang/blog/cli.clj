@@ -1,9 +1,9 @@
-(ns clojang.blog.cli
+(ns clozhang.blog.cli
   (:require [clojure.pprint :refer [pprint]]
             [clojusc.twig :as logger]
-            [clojang.blog.cli.new :as new]
-            [clojang.blog.cli.show :as show]
-            [clojang.blog.routes :refer [routes]]
+            [clozhang.blog.cli.new :as new]
+            [clozhang.blog.cli.show :as show]
+            [clozhang.blog.routes :refer [routes]]
             [dragon.config :as config]
             [dragon.generator :as gen]
             [dragon.util :as util]
@@ -14,13 +14,13 @@
 
 (defn help-cmd
   [& args]
-  (docs/print-docstring 'clojang.blog.cli 'run))
+  (docs/print-docstring 'clozhang.blog.cli 'run))
 
 (defn version-cmd
   []
   (let [version (sys-prop "blog.version")
         build (util/get-build)]
-    (print (format "Clojang blog tool version %s, build %s\n" version build))))
+    (print (format "Clozhang blog tool version %s, build %s\n" version build))))
 
 (defn run
   "
@@ -35,7 +35,7 @@
     new      Create stubbed files for a new blog post
     show     Display various blog data in the terminal
     gen      Generate updated static content for blog
-    run      Run the Clojang blog locally as a Ring app
+    run      Run the Clozhang blog locally as a Ring app
     help     Display this usage message
     version  Display the current NOWA version
   ```

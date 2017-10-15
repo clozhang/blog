@@ -34,7 +34,7 @@
 
             <p>Clojure:</p>
 <pre><code class="clojure">&#40;defn -main
-  &quot;This is the entry point for the Clojang blog Application.
+  &quot;This is the entry point for the Clozhang blog Application.
 
   It manages both the running of the application and related services, as well
   as use of the application name spaces for running tasks on the comand line.
@@ -45,8 +45,8 @@
   &#40;&#91;mode &amp; args&#93;
     ;; Set the initial log-level before the components set the log-levels for
     ;; the configured namespaces
-    &#40;logger/set-level! &#91;'clojang.blog&#93; &#40;config/log-level&#41;&#41;
-    &#40;log/infof &quot;Running the Clojang blog application in %s mode ...&quot; mode&#41;
+    &#40;logger/set-level! &#91;'clozhang.blog&#93; &#40;config/log-level&#41;&#41;
+    &#40;log/infof &quot;Running the Clozhang blog application in %s mode ...&quot; mode&#41;
     &#40;log/debug &quot;Passing the following args to the application:&quot; args&#41;
     &#40;case &#40;keyword mode&#41;
       :web &#40;web/run&#41;

@@ -1,14 +1,14 @@
-(ns clojang.blog.cli.new
+(ns clozhang.blog.cli.new
   (:require [clojure.pprint :refer [pprint]]
             [clojusc.twig :as logger]
-            [clojang.blog.cli.new.post :as post]
+            [clozhang.blog.cli.new.post :as post]
             [dragon.util :as util]
             [taoensso.timbre :as log]
             [trifl.docs :as docs]))
 
 (defn help-cmd
   [& args]
-  (docs/print-docstring 'clojang.blog.cli.new 'run))
+  (docs/print-docstring 'clozhang.blog.cli.new 'run))
 
 (defn run
   "
