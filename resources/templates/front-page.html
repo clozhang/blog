@@ -16,7 +16,7 @@
                 <div class="headliner well">
 
                   <h2>
-                    <a href="{{ headliner.url }}">{{ headliner.title }}</a>
+                    <a href="/blog{{ headliner.url }}">{{ headliner.title }}</a>
                   </h2>
                   {% if headliner.subtitle %}
                     <h4>{{ headliner.subtitle }}</h4>
@@ -47,7 +47,7 @@
               <div class="col-sm-6 well subheadliner">
 
                   <h2>
-                    <a href="{{ column.url }}">{{ column.title }}</a>
+                    <a href="/blog{{ column.url }}">{{ column.title }}</a>
                   </h2>
                   {% if column.subtitle %}
                     <h4>{{ column.subtitle }}</h4>
