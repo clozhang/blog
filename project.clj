@@ -16,11 +16,9 @@
     [ring/ring-core "1.6.0-RC1"]
     [dragon "0.1.0-SNAPSHOT"]
     [markdown-clj "0.9.97"]
-    [me.raynes/cegdown "0.1.1"]
     [org.clojure/clojure "1.8.0"]
     [selmer "1.10.6"]
-    [stasis "2.3.0"]
-    [tentacles "0.5.1"]]
+    [stasis "2.3.0"]]
   :source-paths ["src/clj"]
   :dragon {
     :domain "clozhang.github.io/blog"

@@ -1,7 +1,8 @@
 # Clozhang Blog
 
-*The Official Blog for Clojure/BEAM Language Development*
+*The Github repo for the Clozhang Blog*
 
+See: [https://clozhang.github.io/blog/](https://clozhang.github.io/blog/)
 
 ## Prerequisites
 
