@@ -7016,6 +7016,10 @@ footer .footer-buffer-top {
 footer .footer-buffer-bottom {
   padding: 1em;
 }
+.subbrand {
+  font-style: italic;
+  color: #a34f14;
+}
 div.about > p {
   font-size: 120%;
   padding-bottom: 1em;
@@ -7076,4 +7080,9 @@ div.about blockquote {
 }
 .subheadliner {
   font-size: 110%;
+}
+footer a,
+footer a:link,
+footer a:hover {
+  color: #a34f14;
 }
