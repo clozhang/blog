@@ -7037,6 +7037,11 @@ div.about blockquote {
 .sidebar-module-inset ol:last-child {
   margin-bottom: 0;
 }
+.sidebar-module .social a,
+.sidebar-module .social a:hover,
+.sidebar-module .social a:link {
+  color: #a34f14;
+}
 .sidebar-module .social i {
   padding: 0.25em;
 }
