@@ -14,7 +14,7 @@
     [clojusc/trifl "0.1.0-SNAPSHOT"]
     [clojusc/twig "0.3.1-SNAPSHOT"]
     [ring/ring-core "1.6.0-RC1"]
-    [dragon "0.1.0-SNAPSHOT"]
+    [dragon "0.4.0-SNAPSHOT"]
     [markdown-clj "0.9.97"]
     [org.clojure/clojure "1.8.0"]
     [selmer "1.10.6"]
