@@ -16,34 +16,45 @@
             [taoensso.timbre :as log]))
 
 (defn static-routes
-  []
-  (log/info "Generating pages for static pages ...")
-  {"/about.html" (page/about)
-   "/community.html" (page/community)})
+  ([system posts]
+    (static-routes system posts {}))
+  ([system posts routes]
+    (log/info "Generating pages for static pages ...")
+    (merge
+      routes
+      {"/blog/about.html" (page/about system posts)
+       "/community.html" (page/community system posts)})))
 
 (defn design-routes
-  []
+  [system posts routes]
   (log/info "Generating pages for design pages ...")
-  {"/design/index.html" (page/design)
-   "/design/bootstrap-theme.html" (page/bootstrap-theme)
-   "/design/example-blog.html" (page/blog-example)})
+  (merge
+    routes
+    {"/design/index.html" (page/design system posts)
+     "/design/bootstrap-theme.html" (page/bootstrap-theme system posts)
+     "/design/example-blog.html" (page/blog-example system posts)}))
 
 (defn post-routes
-  [uri-base data]
+  [system posts routes]
   (log/info "Generating pages for blog posts ...")
-  (blog/get-indexed-archive-routes
-    (map vector (iterate inc 0) data)
-    :gen-func page/post
-    :uri-base uri-base))
+  (merge
+    routes
+    (blog/get-indexed-archive-routes
+      (map vector (iterate inc 0) posts)
+      :gen-func (partial page/post system posts)
+      :uri-base (config/posts-path system))))
 
 (defn index-routes
-  [data]
+  [system posts routes]
   (log/info "Generating pages for front page, archives, categories, etc. ...")
-  {"/index.html" (page/front-page data)
-   "/archives/index.html" (page/archives data)
-   "/categories/index.html" (page/categories data)
-   "/tags/index.html" (page/tags data)
-   "/authors/index.html" (page/authors data)})
+  (merge
+    routes
+    {"/index.html" (page/front-page system posts)
+     "/archives/index.html" (page/archives system posts)
+     "/categories/index.html" (page/categories system posts)
+     "/tags/index.html" (page/tags system posts)
+     "/authors/index.html" (page/authors system posts)}))
+
 
 (defn reader-routes
   [uri-base data]
@@ -52,13 +63,20 @@
     {route (reader/atom-feed
              uri-base route (take (config/feed-count) data))}))
 
+; (defn sitemaps-routes
+;   [system routes]
+;   (let [route "/sitemap.xml"]
+;     (merge
+;       routes
+;       {route (sitemapper/gen routes)})))
+
 (defn routes
-  [uri-base]
-  (let [data (blog/process uri-base)]
-    (log/trace "Got data:" (pprint (blog/data-minus-body data)))
-    (merge
-      (static-routes)
-      (design-routes)
-      (post-routes uri-base data)
-      (index-routes data)
-      (reader-routes uri-base data))))
+  [system posts]
+  (log/trace "Got data:" (pprint (blog/data-for-logs posts)))
+  (->> (static-routes system posts)
+       (design-routes system posts)
+       (post-routes system posts)
+       (index-routes system posts)
+       (reader-routes system posts)
+       (sitemaps-routes system)
+       vec))
