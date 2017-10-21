@@ -1,4 +1,4 @@
-(defproject clozhang/blog "0.1.0-SNAPSHOT"
+(defproject clozhang/blog "0.2.0-SNAPSHOT"
   :description "The Clozhang Blog"
   :url "https://clozhang.github.io/blog"
   :scm {
