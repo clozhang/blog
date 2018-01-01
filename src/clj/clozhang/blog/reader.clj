@@ -7,24 +7,25 @@
     [trifl.xml :as xml-util]))
 
 (defn atom-entry
-  [uri-base post]
-  (let [uri (str uri-base (:uri-path post))]
+  [system post]
+  (let [uri-posts (config/posts-path system)
+        uri (str uri-posts (:uri-path post))]
     [:entry
      [:title (:title post)]
      [:updated (:timestamp post)]
      [:author [:name (:author post)]]
-     [:link {:href (format "http://%s/%s" (config/domain) uri)}]
-     [:id (format "%s:feed:post:%s" (config/domain-urn) (:title post))]
+     [:link {:href (format "http://%s/%s" (config/domain system) uri)}]
+     [:id (format "%s:feed:post:%s" (config/domain-urn system) (:title post))]
      [:content {:type "html"} (:body post)]]))
 
 (defn atom-feed
-  [uri-base route posts]
+  [system route posts]
   (xml-util/pretty-xml
    (xml/emit-str
     (xml/sexp-as-element
      [:feed {:xmlns "http://www.w3.org/2005/Atom"}
-      [:id (format "%s:feed" (config/domain-urn))]
+      [:id (format "%s:feed" (config/domain-urn system))]
       [:updated (-> posts first :timestamp)]
-      [:title {:type "text"} (config/name)]
-      [:link {:rel "self" :href (format "http://%s%s" (config/domain) route)}]
-      (map (partial atom-entry uri-base) posts)]))))
+      [:title {:type "text"} (config/name system)]
+      [:link {:rel "self" :href (format "http://%s%s" (config/domain system) route)}]
+      (map (partial atom-entry system) posts)]))))

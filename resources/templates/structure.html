@@ -33,13 +33,6 @@
 
     <link rel="alternate" type="application/atom+xml" title="Feed" href="/blog/atom.xml" />
 
-    {% block pre-css %}
-    {% endblock %}
-    <link href="/blog/assets/highlight/styles/clozhang.css" rel="stylesheet">
-    <link href="/blog/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <link href="/blog/assets/css/styles.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans|Josefin+Slab" rel="stylesheet">
-
     <!-- Favicon Setup /-->
     <link rel="apple-touch-icon" sizes="180x180" href="/blog/assets/icons/apple-touch-icon.png?v=1">
     <link rel="icon" type="image/png" sizes="32x32" href="/blog/assets/icons/favicon-32x32.png?v=1">
@@ -52,7 +45,12 @@
     <meta name="msapplication-config" content="/blog/assets/icons/browserconfig.xml?v=1">
     <meta name="theme-color" content="#ffffff">
 
-    <link href="/blog/assets/css/blog.css" rel="stylesheet">
+    {% block pre-css %}
+    {% endblock %}
+    <link href="/blog/assets/highlight/styles/clozhang.css" rel="stylesheet">
+    <link href="/blog/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/blog/assets/css/styles.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans|Josefin+Slab" rel="stylesheet">
     {% block post-css %}
     {% endblock %}
 
@@ -80,13 +78,13 @@
 <body>
   {% block body-content %}
    {% block header %}
-    <header class="{% block header-class %}tiny{% endblock %}">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
       {% block header-content %}
       {% endblock %}
-    </header>
+    </nav>
     {% endblock %}
     {% block main %}
-    <main id="main-content">
+    <main>
       {% block main-content %}
       <div class="widewrapper main">
         {% block wrapped-main-content %}
@@ -99,51 +97,19 @@
       {% endblock %}
     </main>
     {% endblock %}
-    {% block footer %}
-    <footer>
-      {% block footer-content %}
+    <div class="container">
+      {% block footer %}
+      <footer class="footer">
+        {% block footer-content %}
+        {% endblock %}
+      </footer>
       {% endblock %}
-    </footer>
-    {% endblock %}
+    </div>
+
     {% block post-scripts %}
     {% endblock %}
     {% block post-post-scripts %}
     {% endblock %}
   {% endblock %}
   </body>
-</html>
-
-
-
-  <body>
-  {% block body_content %}
-    {% block top_nav %}
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      {% block top_nav_content %}
-      {% endblock %}
-    </nav>
-    {% endblock %}
-    {% block main %}
-    <main>
-      {% block main_content %}
-      {% endblock %}
-    </main>
-    {% endblock %}
-    {% block footer_wrapper %}
-    <div class="container">
-      {% block footer %}
-      <footer class="footer">
-        {% block footer_content %}
-        {% endblock %}
-      </footer>
-      {% endblock %}
-    </div>
-    {% endblock %}
-    {% block pre_end_scripts %}
-    {% endblock %}
-    {% block end_scripts %}
-
-  {% endblock %}
-  </body>
-{% endblock %}
 </html>

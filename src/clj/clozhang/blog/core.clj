@@ -19,7 +19,8 @@
 (defn generate
   [system]
   (let [posts (dragon-core/generate system)
-        generated-routes (routes system posts)]))
+        generated-routes (routes system posts)]
+    (gen/run system generated-routes)))
 
 ;; XXX force-regenerate doesn't seem to be working yet ... however, this works:
 ;;     `(data-source/set-posts-checksums (get-in system [:db :querier]) "")`

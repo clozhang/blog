@@ -2,6 +2,9 @@
 
 {% block contained-main-content %}
 
+    <div class="container">
+      <div class="page-header" id="banner">
+
         <div class="row">
           <div class="col-sm-8 blog-main">
 
@@ -101,11 +104,13 @@
 
             <div class="sidebar-module">
               <h4>Tags</h4>
-              <p>
-                {% for tag in tags %}
-                <a href="/blog/tags/#{{tag}}">{{ tag }}</a>
-                {% endfor %}
-              </p>
+                <ul>
+                  {% for tag in tags %}
+                  <li>
+                    <a href="{{ page-data.base-path }}/tags/#{{tag.name}}" class="tag-5star-{{ tag.five-star }}">{{ tag.name }}</a> ({{ tag.count }})
+                  </li>
+                  {% endfor %}
+                </ul>
             </div>
 
             <div class="sidebar-module">
@@ -117,4 +122,6 @@
 
         </div>
 
+      </div>
+    </div>
 {% endblock %}

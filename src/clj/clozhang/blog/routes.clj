@@ -18,19 +18,23 @@
     [taoensso.timbre :as log]))
 
 (defn static-routes
-  [system posts routes]
-  (log/info "Generating pages for static pages ...")
-  (merge
-    routes
-    {"/blog/about.html" (page/about system posts)
-     "/blog/community.html" (page/community system posts)}))
+  ([system posts]
+    (static-routes system posts {}))
+  ([system posts routes]
+    (log/info "Generating pages for static pages ...")
+    (merge
+      routes
+      {"/blog/about.html" (page/about system posts)
+       "/blog/community.html" (page/community system posts)})))
 
 (defn design-routes
   [system posts routes]
   (log/info "Generating pages for design pages ...")
-  {"/blog/design/index.html" (page/design system posts)
-   "/blog/design/bootstrap-theme.html" (page/bootstrap-theme system posts)
-   "/blog/design/example-blog.html" (page/blog-example system posts)})
+  (merge
+    routes
+    {"/blog/design/index.html" (page/design system posts)
+     "/blog/design/bootstrap-theme.html" (page/bootstrap-theme system posts)
+     "/blog/design/example-blog.html" (page/blog-example system posts)}))
 
 (defn post-routes
   [system posts routes]
@@ -45,11 +49,13 @@
 (defn index-routes
   [system posts routes]
   (log/info "Generating pages for front page, archives, categories, etc. ...")
-  {"/blog/index.html" (page/front-page system posts)
-   "/blog/archives/index.html" (page/archives system posts)
-   "/blog/categories/index.html" (page/categories system posts)
-   "/blog/tags/index.html" (page/tags system posts)
-   "/blog/authors/index.html" (page/authors system posts)})
+  (merge
+    routes
+    {"/blog/index.html" (page/front-page system posts)
+     "/blog/archives/index.html" (page/archives system posts)
+     "/blog/categories/index.html" (page/categories system posts)
+     "/blog/tags/index.html" (page/tags system posts)
+     "/blog/authors/index.html" (page/authors system posts)}))
 
 (defn reader-routes
   [system posts routes]

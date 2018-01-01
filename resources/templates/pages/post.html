@@ -19,6 +19,10 @@
  {{ blocks.head-postpends|safe }}
 {% endblock %}
 
+{% block post-css %}
+<link href="/blog/assets/css/blog.css" rel="stylesheet">
+{% endblock %}
+
 {% block main-content %}
     <div class="container">
       <div class="page-header" id="banner">
@@ -111,13 +115,13 @@
 
           <div class="sidebar-module">
             <h4>Tags</h4>
-            <p>
+            <ul>
               {% for tag in tags %}
               <li>
                 <a href="{{ page-data.base-path }}/tags/#{{tag}}">{{ tag }}</a>
               </li>
               {% endfor %}
-            </p>
+            </ul>
           </div>
 
           <div class="sidebar-module">
