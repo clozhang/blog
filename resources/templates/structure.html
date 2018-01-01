@@ -1,9 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-{% block head %}
+  {% block head-prepends %}
+  {% endblock %}
+  {% block head-content %}
   <head>
-  {% block head_content %}
     <meta charset="utf-8">
+    <title>
+    {% block page-title %}
+      Clozhang Tutorials, Info, & News
+      {% block page-subtitle %}
+      {{subtitle}}
+      {% endblock %}
+    {% endblock %}
+    </title>
+    {% block pre-metadata %}
+    {% endblock %}
+    {% block site-metadata %}
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
@@ -13,6 +25,22 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+    {% endblock %}
+    {% block page-metadata %}
+    {% endblock %}
+    {% block post-metadata %}
+    {% endblock %}
+
+    <link rel="alternate" type="application/atom+xml" title="Feed" href="/blog/atom.xml" />
+
+    {% block pre-css %}
+    {% endblock %}
+    <link href="/blog/assets/highlight/styles/clozhang.css" rel="stylesheet">
+    <link href="/blog/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/blog/assets/css/styles.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans|Josefin+Slab" rel="stylesheet">
+
+    <!-- Favicon Setup /-->
     <link rel="apple-touch-icon" sizes="180x180" href="/blog/assets/icons/apple-touch-icon.png?v=1">
     <link rel="icon" type="image/png" sizes="32x32" href="/blog/assets/icons/favicon-32x32.png?v=1">
     <link rel="icon" type="image/png" sizes="16x16" href="/blog/assets/icons/favicon-16x16.png?v=1">
@@ -24,35 +52,69 @@
     <meta name="msapplication-config" content="/blog/assets/icons/browserconfig.xml?v=1">
     <meta name="theme-color" content="#ffffff">
 
-    <title>{% block page_title %}Clozhang Tutorials, Info, & News{% endblock %}{% block page_subtitle %}{% endblock %}</title>
-    {% block pre_head_scripts %}
+    <link href="/blog/assets/css/blog.css" rel="stylesheet">
+    {% block post-css %}
     {% endblock %}
 
-    {% block pre_css %}
+    {% block pre-head-scripts %}
     {% endblock %}
-    <link href="/blog/assets/highlight/styles/clozhang.css" rel="stylesheet">
-    <link href="/blog/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <link href="/blog/assets/css/styles.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans|Josefin+Slab" rel="stylesheet">
+
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-    {% block post_css %}
-    {% endblock %}
-    {% block pre_head_scripts %}
-    {% endblock %}
     <script src="/blog/assets/highlight/highlight.pack.js"></script>
-    {% block post_head_scripts %}
-    {% endblock %}
     <script>
       hljs.initHighlightingOnLoad();
     </script>
-  {% endblock %}
+
+    {% block post-head-scripts %}
+    {% endblock %}
+
+    {% block head-postpends %}
+    {% endblock %}
   </head>
-{% endblock %}
-{% block body %}
+  {% endblock %}
+<body>
+  {% block body-content %}
+   {% block header %}
+    <header class="{% block header-class %}tiny{% endblock %}">
+      {% block header-content %}
+      {% endblock %}
+    </header>
+    {% endblock %}
+    {% block main %}
+    <main id="main-content">
+      {% block main-content %}
+      <div class="widewrapper main">
+        {% block wrapped-main-content %}
+        <div class="container">
+          {% block contained-main-content %}
+          {% endblock %}
+        </div>
+        {% endblock %}
+      </div>
+      {% endblock %}
+    </main>
+    {% endblock %}
+    {% block footer %}
+    <footer>
+      {% block footer-content %}
+      {% endblock %}
+    </footer>
+    {% endblock %}
+    {% block post-scripts %}
+    {% endblock %}
+    {% block post-post-scripts %}
+    {% endblock %}
+  {% endblock %}
+  </body>
+</html>
+
+
+
   <body>
   {% block body_content %}
     {% block top_nav %}
@@ -80,26 +142,7 @@
     {% block pre_end_scripts %}
     {% endblock %}
     {% block end_scripts %}
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="/blog/assets/js/jquery-1.12.1.min.js"></script>
-    <script>window.jQuery || document.write('<script src="/blog/assets/js/jquery-1.12.1.min.js"><\/script>')</script>
-    <script src="/blog/assets/js/bootstrap-3.3.6.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="/blog/assets/js/clozhang.js"></script>
-    {% endblock %}
-    {% block post_end_scripts %}
-    {% endblock %}
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-1179318-4"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
 
-      gtag('config', 'UA-1179318-4');
-    </script>
   {% endblock %}
   </body>
 {% endblock %}

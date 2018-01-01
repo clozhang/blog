@@ -1,66 +1,131 @@
 (ns clozhang.blog.web.content.data
-  (:require [dragon.blog :as blog]
-            [dragon.config :as config]))
+  (:require
+    [clojure.java.io :as io]
+    [clojure.string :as string]
+    [dragon.blog.content.block :as block]
+    [dragon.blog.content.data :as page-data]
+    [dragon.blog.core :as blog]
+    [dragon.blog.tags :as blog-tags]
+    [dragon.config.core :as config]
+    [markdown.core :as markdown]
+    [taoensso.timbre :as log]))
 
-(defn base
-  ([]
-    (base {}))
-  ([data]
-    (merge
-      data
-      {:site-title (config/name)
-       :site-description (config/description)
-       :index "index"
-       :about "about"
-       :community "community"
-       :archives "archives"
-       :categories "categories"
-       :tags "tags"
-       :authors "authors"})))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;   Base Data Functions   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn common
+  ([system]
+    (common system {}))
+  ([system posts]
+    (common system posts {}))
+  ([system posts additional-opts]
+    (let [base-opts {:site-title (config/name system)
+                     :site-description (config/description system)}]
+      (page-data/common posts (merge base-opts additional-opts)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;   Static Pages Data   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defn about
-  []
-  {:page-data (base {:active "about"})})
+  [system posts]
+  (common system
+          posts
+          (page-data/default-markdown-content-opts
+            {:title "About"
+             :category-key :about
+             :content-filename "about.md"})))
 
 (defn community
-  []
-  {:page-data (base {:active "community"})})
+  [system posts]
+  (let [data-content {}]
+    (common system
+            posts
+            (page-data/default-markdown-content-opts
+              {:title "Community"
+               :category-key :community
+               :content-filename "community.md"}))))
 
-(defn design
-  []
-  {:page-data (base {:active "design"})})
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;   Dynamic Pages Data   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defn post
-  [data]
-  {:page-data (base {:active "archives"})
-   :post-data data
-   :tags (blog/tags [data])})
-
-(defn archives
-  [data]
-  {:page-data (base {:active "archives"})
-   :posts-data data})
+  [system posts post-data]
+  (common system
+          posts
+          {:category-key "archives"
+           :post-data post-data
+           :tags (blog-tags/unique [post-data])}))
 
 (defn front-page
-  [data & {post-count :post-count column-count :column-count}]
-  (let [headliner (first data)
-        posts (partition column-count (take (- post-count 1) (rest data)))]
-  {:page-data (base {:active "index"})
-   :tags (blog/tags data)
-   :headliner headliner
-   :posts-data posts}))
+  [system all-posts top-posts &
+   {:keys [above-fold-count below-fold-count column-count]}]
+  (let [above-posts (take above-fold-count top-posts)
+        headliner (first above-posts)
+        grouped-posts (partition column-count
+                                 (nthrest above-posts 1))
+        below-posts (nthrest top-posts above-fold-count)]
+    (common system
+            all-posts
+            {:category-key "index"
+             :tags (blog-tags/get-stats all-posts)
+             :headliner headliner
+             :posts-data grouped-posts
+             :posts-count (count top-posts)
+             :above-count (count above-posts)
+             :below-count (count below-posts)
+             :below-fold-data below-posts})))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;   Listings Pages   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn archives
+  [system posts]
+  (common system
+          posts
+          (page-data/default-data-content-opts
+            {:title "Archives"
+             :category-key "archives"
+             :posts-data (blog/group-data :archives posts)})))
 
 (defn categories
-  [data]
-  {:page-data (base {:active "categories"})
-   :posts-data data})
+  [system posts]
+  (common system
+          posts
+          (page-data/default-data-content-opts
+            {:title "Categories"
+             :category-key "categories"
+             :posts-data (blog/group-data :categories posts)})))
 
 (defn tags
-  [data]
-  {:page-data (base {:active "tags"})
-   :posts-data data})
+  [system posts]
+  (common system
+          posts
+          (page-data/default-data-content-opts
+            {:title "Tags"
+             :category-key "tags"
+             :posts-data (blog/group-data :tags posts)})))
 
 (defn authors
-  [data]
-  {:page-data (base {:active "authors"})
-   :posts-data data})
+  [system posts]
+  (common system
+          posts
+          (page-data/default-data-content-opts
+            {:title "Authors"
+             :category-key "authors"
+             :posts-data (blog/group-data :authors posts)})))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;   Design Pages Data   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn design
+  [system posts]
+  (common system
+          posts
+          (page-data/default-data-content-opts
+            {:title "Design"
+             :category-key "design"})))

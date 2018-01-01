@@ -6,59 +6,70 @@
    * The routes are only used durng development, when serving content
      dynamically.
    * Since the posts have already been generated and saved to disc, their
-     routes should be generated dynamically as URI path / slurp call pairs.
-  "
-  (:require [clozhang.blog.reader :as reader]
-            [clozhang.blog.web.content.page :as page]
-            [clojusc.twig :refer [pprint]]
-            [dragon.blog :as blog]
-            [dragon.config :as config]
-            [taoensso.timbre :as log]))
+     routes should be generated dynamically as URI path / slurp call pairs."
+  (:require
+    [clozhang.blog.reader :as reader]
+    [clozhang.blog.web.content.page :as page]
+    [clojusc.twig :refer [pprint]]
+    [dragon.blog.core :as blog]
+    [dragon.config.core :as config]
+    [dragon.event.system.core :as event]
+    [dragon.event.tag :as tag]
+    [taoensso.timbre :as log]))
 
 (defn static-routes
-  []
+  [system posts routes]
   (log/info "Generating pages for static pages ...")
-  {"/about.html" (page/about)
-   "/community.html" (page/community)})
+  (merge
+    routes
+    {"/blog/about.html" (page/about system posts)
+     "/blog/community.html" (page/community system posts)}))
 
 (defn design-routes
-  []
+  [system posts routes]
   (log/info "Generating pages for design pages ...")
-  {"/design/index.html" (page/design)
-   "/design/bootstrap-theme.html" (page/bootstrap-theme)
-   "/design/example-blog.html" (page/blog-example)})
+  {"/blog/design/index.html" (page/design system posts)
+   "/blog/design/bootstrap-theme.html" (page/bootstrap-theme system posts)
+   "/blog/design/example-blog.html" (page/blog-example system posts)})
 
 (defn post-routes
-  [uri-base data]
+  [system posts routes]
   (log/info "Generating pages for blog posts ...")
-  (blog/get-indexed-archive-routes
-    (map vector (iterate inc 0) data)
-    :gen-func page/post
-    :uri-base uri-base))
+  (merge
+    routes
+    (blog/get-indexed-archive-routes
+      (map vector (iterate inc 0) posts)
+      :gen-func (partial page/post system posts)
+      :uri-base (config/posts-path system))))
 
 (defn index-routes
-  [data]
+  [system posts routes]
   (log/info "Generating pages for front page, archives, categories, etc. ...")
-  {"/index.html" (page/front-page data)
-   "/archives/index.html" (page/archives data)
-   "/categories/index.html" (page/categories data)
-   "/tags/index.html" (page/tags data)
-   "/authors/index.html" (page/authors data)})
+  {"/blog/index.html" (page/front-page system posts)
+   "/blog/archives/index.html" (page/archives system posts)
+   "/blog/categories/index.html" (page/categories system posts)
+   "/blog/tags/index.html" (page/tags system posts)
+   "/blog/authors/index.html" (page/authors system posts)})
 
 (defn reader-routes
-  [uri-base data]
+  [system posts routes]
   (log/info "Generating XML for feeds ...")
-  (let [route "/atom.xml"]
-    {route (reader/atom-feed
-             uri-base route (take (config/feed-count) data))}))
+  (let [route "/blog/atom.xml"]
+    (merge
+      routes
+      {route (reader/atom-feed
+               system
+               route
+               (take (config/feed-count system) posts))})))
 
 (defn routes
-  [uri-base]
-  (let [data (blog/process uri-base)]
-    (log/trace "Got data:" (pprint (blog/data-minus-body data)))
-    (merge
-      (static-routes)
-      (design-routes)
-      (post-routes uri-base data)
-      (index-routes data)
-      (reader-routes uri-base data))))
+  [system posts]
+  (log/trace "Got data:" (pprint (blog/data-for-logs posts)))
+  (event/publish system tag/generate-routes-pre)
+  (->> (static-routes system posts)
+       (design-routes system posts)
+       (post-routes system posts)
+       (index-routes system posts)
+       (reader-routes system posts)
+       (event/publish->> system tag/generate-routes-post)
+       vec))

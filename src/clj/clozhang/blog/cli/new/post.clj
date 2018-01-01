@@ -1,13 +1,10 @@
 (ns clozhang.blog.cli.new.post
-  (:require [clojure.pprint :refer [pprint]]
-            [dragon.stub :as stub]
-            [dragon.util :as util]
-            [taoensso.timbre :as log]
-            [trifl.docs :as docs]))
-
-(defn help-cmd
-  [& args]
-  (docs/print-docstring 'clozhang.blog.cli.new.post 'run))
+  (:require
+    [clojure.pprint :refer [pprint]]
+    [dragon.cli.new.stub :as stub]
+    [dragon.util :as util]
+    [taoensso.timbre :as log]
+    [trifl.docs :as docs]))
 
 (defn run
   "
@@ -29,7 +26,7 @@
                  are used instead) and the XXX field is used to indicate the
                  content type of the body of the message (blog)
   ```"
-  [[cmd & args]]
+  [system [cmd & args]]
   (log/debug "Got cmd:" cmd)
   (log/debug "Got args:" args)
   (let [passed-date (first args)
@@ -40,4 +37,4 @@
       :edn (stub/make-edn-post date)
       :html (stub/make-html-post date)
       :rfc5322 (stub/make-rfc5322-post date)
-      (help-cmd))))
+      (docs/print-docstring #'run))))
